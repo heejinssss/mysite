@@ -17,7 +17,7 @@
 		<div id="content">
 			<div id="guestbook">
 				<form action="<%=request.getContextPath() %>/guestbook" method="post">
-					<input type="hidden" name="a" value="add">
+					<input type="hidden" name="a" value="insert">
 					<table>
 						<tr>
 							<td>이름</td><td><input type="text" name="name"></td>
@@ -42,7 +42,7 @@
 								<td>[<%=contentNo--%>]</td>
 								<td><%=vo.getName()%></td>
 								<td><%=vo.getRegDate()%></td>
-								<td><a href="">삭제</a></td>
+								<td><a href="<%=request.getContextPath() %>/guestbook?a=deleteform&no=<%=vo.getNo() %>">삭제</a></td>
 							</tr>
 							<tr>
 								<td colspan=4>
