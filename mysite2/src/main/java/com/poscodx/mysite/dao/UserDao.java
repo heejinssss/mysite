@@ -35,7 +35,7 @@ public class UserDao {
 		) {
 			pstmt1.setString(1, vo.getName());
 			pstmt1.setString(2, vo.getEmail());
-			pstmt1.setString(3,  vo.getPassword());
+			pstmt1.setString(3, vo.getPassword());
 			pstmt1.setString(4, vo.getGender());
 			result = pstmt1.executeUpdate();
 
