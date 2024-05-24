@@ -1,10 +1,14 @@
 package com.poscodx.mysite.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.poscodx.mysite.dao.GuestbookDao;
+import com.poscodx.mysite.vo.GuestbookVo;
 
 public class GuestbookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -13,14 +17,32 @@ public class GuestbookServlet extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		String action = request.getParameter("a");
-		
-		if ("".equals(action)) {
-			
-		} else if ("".equals(action)) {
-			
-		} else {
-			request.getRequestDispatcher("/WEB-INF/views/guestbook/list.jsp")
+
+		if ("deleteform".equals(action)) {
+			request.getRequestDispatcher("/WEB-INF/views/guestbook/deleteform.jsp")
 				   .forward(request, response);
+		} else if ("delete".equals(action)) {
+			String no = request.getParameter("no");
+			String password = request.getParameter("password");
+			new GuestbookDao().deleteByNoAndPassword(Long.parseLong(no), password);
+
+			response.sendRedirect(request.getContextPath() + "/guestbook");
+		} else if ("add".equals(action)) {
+			String name = request.getParameter("name");
+			String password = request.getParameter("password");
+			String contents = request.getParameter("contents");
+
+			GuestbookVo vo = new GuestbookVo();
+			vo.setName(name);
+			vo.setPassword(password);
+			vo.setContents(contents);
+
+			new GuestbookDao().insert(vo);
+			response.sendRedirect(request.getContextPath() + "/guestbook");
+		} else {
+			request.setAttribute("list", new GuestbookDao().findAll());
+			request.getRequestDispatcher("/WEB-INF/views/guestbook/list.jsp")
+			       .forward(request, response);
 		}
 	}
 

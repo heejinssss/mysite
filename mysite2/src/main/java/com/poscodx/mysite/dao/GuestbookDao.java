@@ -80,13 +80,13 @@ public class GuestbookDao {
 				Long no = rs.getLong(1);
 				String name = rs.getString(2);
 				String contents = rs.getString(3);
-				String reg_date = rs.getString(4);
+				String regDate = rs.getString(4);
 
 				GuestbookVo vo = new GuestbookVo();
 				vo.setNo(no);
 				vo.setName(name);
 				vo.setContents(contents);
-				vo.setReg_date(reg_date.substring(0, 10));
+				vo.setRegDate(regDate.substring(0, 10));
 
 				result.add(vo);
 			}
