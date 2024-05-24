@@ -21,7 +21,7 @@ public class UserServlet extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/views/user/joinform.jsp")
 				   .forward(request, response);
 		} else if ("join".equals(action)) {
-			String name = request.getParameter(action);
+			String name = request.getParameter("name");
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			String gender = request.getParameter("gender");
