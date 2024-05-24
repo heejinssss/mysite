@@ -30,7 +30,7 @@ public class UserDao {
 
 		try (
 			Connection conn = getConnection();
-			PreparedStatement pstmt1 = conn.prepareStatement("insert into user values(null, ?, ?, ?, ?, current_date());");
+			PreparedStatement pstmt1 = conn.prepareStatement("insert into user values(null, ?, ?, password(?), ?, current_date())");
 			PreparedStatement pstmt2 = conn.prepareStatement("select last_insert_id() from dual");
 		) {
 			pstmt1.setString(1, vo.getName());
