@@ -38,7 +38,7 @@ public class UserServlet extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/user?a=joinsuccess");
 		} else if ("joinsuccess".equals(action)) {
 			request.getRequestDispatcher("/WEB-INF/views/user/joinsuccess.jsp")
-			   .forward(request, response);
+			       .forward(request, response);
 		} else {
 			response.sendRedirect(request.getContextPath());
 		}
