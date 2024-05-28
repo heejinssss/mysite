@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public abstract class ActionServlet extends HttpServlet {
-	private static final long serailVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	protected abstract Action getAction(String actionName);
 
@@ -21,7 +21,7 @@ public abstract class ActionServlet extends HttpServlet {
 		Action action = getAction(actionName);
 		if (action == null) {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			return; // 중요
+			return;
 		}
 		
 		action.execute(req, resp);
@@ -29,9 +29,9 @@ public abstract class ActionServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doPost(req, resp);
+		doGet(req, resp);
 	}
-
+	
 	public static interface Action {
 		void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 	}

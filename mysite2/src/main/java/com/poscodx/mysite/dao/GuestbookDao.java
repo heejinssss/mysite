@@ -58,7 +58,6 @@ public class GuestbookDao {
 		) {
 			pstmt.setLong(1, no);
 			pstmt.setString(2, password);
-
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("error : " + e);
