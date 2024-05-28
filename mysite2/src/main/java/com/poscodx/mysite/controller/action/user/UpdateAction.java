@@ -18,7 +18,7 @@ public class UpdateAction implements Action {
 		HttpSession session = request.getSession();
 
 		// Access Control
-		if (session != null) {
+		if (session == null) {
 			response.sendRedirect(request.getContextPath());
 			return;
 		}
