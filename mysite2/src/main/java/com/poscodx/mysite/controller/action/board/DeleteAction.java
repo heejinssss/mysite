@@ -8,9 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.poscodx.mysite.controller.ActionServlet.Action;
+import com.poscodx.mysite.dao.BoardDao;
 import com.poscodx.mysite.vo.UserVo;
 
-public class WriteFormAction implements Action {
+public class DeleteAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -21,8 +22,12 @@ public class WriteFormAction implements Action {
 			response.sendRedirect(request.getContextPath() + "/user?a=loginform");
 			return;
 		}
+		
+		Long no = Long.parseLong(request.getParameter("n"));
+		int curPage = Integer.parseInt(request.getParameter("p"));
+		
+		new BoardDao().deleteByNo(no);
 
-		request.getRequestDispatcher("/WEB-INF/views/board/write.jsp")
-		       .forward(request, response);
+		response.sendRedirect("board?a=list&p="+curPage);
 	}
 }

@@ -26,6 +26,7 @@ public class WriteAction implements Action {
 		} else {
 			request.setAttribute("authUser", authUser);
 		}
+
 		String title = request.getParameter("title");
 		String contents = request.getParameter("contents");
 		Date currentDate = new Date();
@@ -37,14 +38,25 @@ public class WriteAction implements Action {
 		vo.setContents(contents);
 		vo.setRegDate(regDate);
 
-		long userNo = authUser.getNo();
+		Long userNo = authUser.getNo();
 		vo.setUserNo(userNo);
 
 		String no = request.getParameter("no");
 
+		if (no == null || "".equals(no)) {
+			vo.setgNo(new BoardDao().getNextGroupNo());
+			vo.setDepth(1L);
+			vo.setoNo(1L);
+		} else {
+            BoardVo prevVo = new BoardDao().getBoardByNo(no).get(0);
+            vo.setgNo(prevVo.getgNo());
+            vo.setoNo(prevVo.getoNo() + 1);
+            vo.setDepth(prevVo.getDepth() + 1);
+            new BoardDao().Update(prevVo.getgNo(), prevVo.getoNo() + 1);
+		}
+		
 		new BoardDao().insert(vo);
-		System.out.println(title + contents + currentDate + regDate + userNo + no + " " + vo.getgNo() + " " + vo.getoNo() + " " + vo.getDepth());
-		response.sendRedirect("/mysite2/board");
+		System.out.println(title + " " + contents + " " + vo.getRegDate() + " " + userNo + " " + vo.getNo() + " " + vo.getgNo() + " " + vo.getoNo() + " " + vo.getDepth());
+		response.sendRedirect(request.getContextPath() + "/board");
 	}
-
 }
