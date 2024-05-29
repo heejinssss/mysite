@@ -15,8 +15,8 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="" method="post">
-					<input type="text" id="kwd" name="kwd" value="">
+				<form id="search_form" action="${pageContext.request.contextPath }/board" method="get">
+					<input type="text" id="kwd" name="kwd" value="${kwd }">
 					<input type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
@@ -27,35 +27,26 @@
 						<th>조회수</th>
 						<th>작성일</th>
 						<th>&nbsp;</th>
-					</tr>				
-					<tr>
-						<td>3</td>
-						<td style="text-align:left; padding-left:${20*0 }px"><a href="">세 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-10-11 12:04:20</td>
-						<td><a href="" class="del">삭제</a></td>
 					</tr>
-					<tr>
-						<td>2</td>
-						<td style="text-align:left; padding-left:${20*1 }px">
-							<img src="${pageContext.request.contextPath}/assets/images/reply.png">
-							<a href="">두 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-10-02 12:04:12</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td style="text-align:left; padding-left:${20*2 }px">
-							<img src="${pageContext.request.contextPath}/assets/images/reply.png">
-							<a href="">첫 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-09-25 07:24:32</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr>
+					<c:forEach var="item" items="${list }" varStatus="status">
+						<c:set var="i" value="${fn:length(list) }" />
+						<tr>
+							<td>${item.no }</td>
+							<!-- padding으로 게시글과 답글을 구분 -->
+							<td style="padding-left:${(item.depth-1) * 20 }px">
+								<c:if test="${item.depth > 1 }">
+									<img src="${pageContext.request.contextPath}/assets/images/reply.png">								
+								</c:if>
+								<a href="{pageContext.request.contextPath}/board?b=view&no=${item.no }$curPage=${currentPage }">
+									${item.title }
+								</a>
+							</td>
+							<td>${item.writer }</td>
+							<td>${item.hit }</td>
+							<td>${item.regDate }</td>
+							<td><a href="" class="del">삭제</a></td>
+						</tr>
+					</c:forEach>				
 				</table>
 				
 				<!-- pager 추가 -->
@@ -73,7 +64,7 @@
 				<!-- pager 추가 -->
 				
 				<div class="bottom">
-					<a href="" id="new-book">글쓰기</a>
+					<a href="${pageContext.request.contextPath }/board?b=writeform" id="new-book">글쓰기</a>
 				</div>				
 			</div>
 		</div>
