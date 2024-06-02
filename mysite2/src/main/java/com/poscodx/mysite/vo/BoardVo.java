@@ -1,95 +1,74 @@
 package com.poscodx.mysite.vo;
 
 public class BoardVo {
-	private Long no;
-	private String title;
-	private String contents;
-	private Long hit;
-	private String regDate;
-	private Long gNo;
-	private Long oNo;
-	private Long depth;
-	private Long userNo;
-	private String writer;
-
+    private Long no;
+    private String title;
+    private String contents;
+    private int hit;
+    private String regDate;
+    private int groupNo;
+    private int orderNo;
+    private int depth;
+    private Long userNo;
+    private String userName;
 	public Long getNo() {
 		return no;
 	}
-
 	public void setNo(Long no) {
 		this.no = no;
 	}
-
 	public String getTitle() {
 		return title;
 	}
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
 	public String getContents() {
 		return contents;
 	}
-
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
-
-	public Long getHit() {
+	public int getHit() {
 		return hit;
 	}
-
-	public void setHit(Long hit) {
+	public void setHit(int hit) {
 		this.hit = hit;
 	}
-
 	public String getRegDate() {
 		return regDate;
 	}
-
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
-
-	public Long getgNo() {
-		return gNo;
+	public int getGroupNo() {
+		return groupNo;
 	}
-
-	public void setgNo(Long gNo) {
-		this.gNo = gNo;
+	public void setGroupNo(int groupNo) {
+		this.groupNo = groupNo;
 	}
-
-	public Long getoNo() {
-		return oNo;
+	public int getOrderNo() {
+		return orderNo;
 	}
-
-	public void setoNo(Long oNo) {
-		this.oNo = oNo;
+	public void setOrderNo(int orderNo) {
+		this.orderNo = orderNo;
 	}
-
-	public Long getDepth() {
+	public int getDepth() {
 		return depth;
 	}
-
-	public void setDepth(Long depth) {
+	public void setDepth(int depth) {
 		this.depth = depth;
 	}
-
 	public Long getUserNo() {
 		return userNo;
 	}
-
 	public void setUserNo(Long userNo) {
 		this.userNo = userNo;
 	}
-
-	public String getWriter() {
-		return writer;
+	public String getUserName() {
+		return userName;
 	}
-
-	public void setWriter(String writer) {
-		this.writer = writer;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
-
 }

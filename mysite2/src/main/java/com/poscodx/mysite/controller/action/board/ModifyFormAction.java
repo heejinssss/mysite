@@ -1,6 +1,8 @@
 package com.poscodx.mysite.controller.action.board;
 
+
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,7 +13,7 @@ import com.poscodx.mysite.vo.BoardVo;
 import com.poscodx.mysite.vo.UserVo;
 import com.poscodx.mysite.controller.ActionServlet.Action;
 
-public class WriteAction implements Action {
+public class ModifyFormAction implements Action {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -19,22 +21,22 @@ public class WriteAction implements Action {
         UserVo authUser = (UserVo) session.getAttribute("authUser");
 
         if (authUser == null) {
+            response.sendRedirect(request.getContextPath()+"/board");
+            return;
+        }
+
+        String no = request.getParameter("no");
+        BoardVo vo = new BoardDao().findByNo(Long.parseLong(no));
+        Long userNo = authUser.getNo();
+        Long boardWriter = vo.getUserNo();
+
+        if (userNo != boardWriter) {
             response.sendRedirect(request.getContextPath() + "/board");
             return;
         }
 
-        int maxGroupNo = new BoardDao().findMaxGroupNo();
-        BoardVo boardVo = new BoardVo();
-        boardVo.setTitle(request.getParameter("title"));
-        boardVo.setContents(request.getParameter("contents"));
-        boardVo.setHit(0);
-        boardVo.setDepth(0);
-        boardVo.setGroupNo(maxGroupNo + 1);
-        boardVo.setOrderNo(1);
-        boardVo.setUserNo(authUser.getNo());
-
-        new BoardDao().insert(boardVo);
-
-        response.sendRedirect( request.getContextPath() + "/board?a=board");
+        request.setAttribute("vo", vo);
+        request.getRequestDispatcher("/WEB-INF/views/board/modify.jsp")
+               .forward(request, response);
     }
 }
