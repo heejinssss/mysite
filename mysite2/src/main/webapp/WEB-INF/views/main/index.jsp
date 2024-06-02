@@ -19,7 +19,7 @@
 					<h2>안녕하세요. 배희진의  mysite에 오신 것을 환영합니다.</h2>
 					<p>
 						블로그 실습<br><br>
-						<a href="#">방명록</a>에 글 남기기<br>
+						<a href="${pageContext.request.contextPath }/guestbook">방명록</a>에 글 남기기<br>
 					</p>
 				</div>
 			</div>
