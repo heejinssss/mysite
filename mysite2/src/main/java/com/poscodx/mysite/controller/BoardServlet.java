@@ -2,7 +2,6 @@ package com.poscodx.mysite.controller;
 
 import com.poscodx.mysite.controller.action.board.*;
 
-
 import java.util.Map;
 
 public class BoardServlet extends ActionServlet {
@@ -12,12 +11,12 @@ public class BoardServlet extends ActionServlet {
             "view", new ViewAction(),
             "writeform", new WriteFormAction(),
             "write", new WriteAction(),
-            "delete", new DeleteAction(),
             "modifyform", new ModifyFormAction(),
             "modify", new ModifyAction(),
-            "reply", new ReplyAction(),
+            "delete", new DeleteAction(),
             "replyform", new ReplyFormAction(),
-            "page", new PageAction()
+            "reply", new ReplyAction(),
+            "paging", new PagingAction()
     );
 
     @Override

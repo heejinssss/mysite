@@ -10,12 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 public abstract class ActionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
 	protected abstract Action getAction(String actionName);
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		req.setCharacterEncoding("utf-8");
 		String actionName = Optional.ofNullable(req.getParameter("a")).orElse("");
 
 		Action action = getAction(actionName);

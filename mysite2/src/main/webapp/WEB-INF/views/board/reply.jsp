@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,11 +15,17 @@
 		<div id="content">
 			<div id="board">
 				<form class="board-form" method="post"
-					action="${pageContext.request.contextPath }/board?a=write">
-					<input type="hidden" name="a" value="write">
+					action="${pageContext.request.contextPath }/board">
+					<input type="hidden" name="a" value="reply"> <input
+						type="hidden" name="no" value="${vo.no }"> <input
+						type="hidden" name="gNo" value="${vo.gNo }"> <input
+						type="hidden" name="oNo" value="${vo.oNo }"> <input
+						type="hidden" name="depth" value="${vo.depth }">
+
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>
+
 						</tr>
 						<tr>
 							<td class="label">제목</td>

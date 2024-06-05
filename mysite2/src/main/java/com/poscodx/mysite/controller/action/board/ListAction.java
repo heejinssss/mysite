@@ -1,67 +1,69 @@
 package com.poscodx.mysite.controller.action.board;
 
-import java.io.IOException;
-import java.util.List;
+import com.poscodx.mysite.controller.ActionServlet.Action;
+import com.poscodx.mysite.dao.BoardDao;
+import com.poscodx.mysite.vo.BoardVo;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.poscodx.mysite.controller.ActionServlet.Action;
-import com.poscodx.mysite.dao.BoardDao;
-import com.poscodx.mysite.vo.BoardVo;
-import com.poscodx.mysite.vo.PageVo;
+import java.io.IOException;
+import java.util.List;
 
 public class ListAction implements Action {
-
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        PageVo paging = new PageVo();
+        String action = request.getParameter("a");
+        if (action == null || action.isEmpty()) {
+            request.getSession().removeAttribute("kwd");
+            request.getSession().removeAttribute("page");
+        }
+
+        int currentPage = getCurrentPage(request);
+        int limit = 5;
+        int std = (currentPage - 1) * limit;
 
         String keyword = request.getParameter("kwd");
-        String curPage = request.getParameter("page");
+        List<BoardVo> list;
+        int totalPosts;
 
-        int currentPage = 1;
-        int start = 0;
-        int groupStartNum = 0;
-        int groupEndNum = 0;
-        int endPageNum = 0;
-        int pageSize = PageVo.getPageSize();
+        BoardDao boardDao = new BoardDao();
+        if (keyword!= null &&!keyword.isEmpty()) {
+            totalPosts = boardDao.count(keyword);
 
-        if (keyword == null || keyword.isEmpty()) {
-            keyword = "";
-        }
-
-        if (curPage == null || "null".equals(curPage)) {
-
+            list = boardDao.search(keyword, limit, std);
         } else {
-            currentPage = Integer.parseInt(request.getParameter("page"));
+            totalPosts = boardDao.count();
+            list = BoardDao.findByLimit(limit, std);
         }
 
-        paging.setGroup(currentPage);
-        groupStartNum = paging.getGroupStartNum();
-        groupEndNum = paging.getGroupEndNum();
+        int totalPages = (int) Math.ceil((double) totalPosts / limit);
+        int maxPage = 5;
+        int startPage = Math.max(1, currentPage - maxPage / 2);
+        int endPage = Math.min(totalPages, startPage + maxPage - 1);
 
-        paging.setLastPageNum(keyword);
-        endPageNum = paging.getEndPageNum();
-
-        if (currentPage != 0) {
-            start = (currentPage * pageSize) - pageSize;
-        } else {
-            start = (currentPage * pageSize);
+        if (endPage - startPage < maxPage - 1) {
+            startPage = Math.max(1, endPage - maxPage + 1);
         }
 
-        List<BoardVo> list = new BoardDao().findSearch(keyword, start, pageSize);
-
-        request.setAttribute("currentPage", currentPage);
-        request.setAttribute("groupStartNum", groupStartNum);
-        request.setAttribute("groupEndNum", groupEndNum);
-        request.setAttribute("endPageNum", endPageNum);
         request.setAttribute("list", list);
+        request.setAttribute("totalPosts", totalPosts);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("currentPage", currentPage);
+        request.setAttribute("startPage", startPage);
+        request.setAttribute("endPage", endPage);
         request.setAttribute("kwd", keyword);
 
         request.getRequestDispatcher("/WEB-INF/views/board/list.jsp")
-               .forward(request, response);
+           .forward(request, response);
+    }
+
+    private int getCurrentPage(HttpServletRequest request) {
+        String pageParam = request.getParameter("page");
+        if (pageParam!= null && !pageParam.isEmpty()) {
+            return Integer.parseInt(pageParam);
+        }
+        return 1;
     }
 }
