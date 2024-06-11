@@ -8,14 +8,13 @@ import com.poscodx.mysite.vo.UserVo;
 
 @Service
 public class UserService {
-	
 	@Autowired
 	private UserRepository userRepository;
 
 	public void join(UserVo vo) {
 		userRepository.insert(vo);
 	}
-	
+
 	public UserVo getUser(String email, String password) {
 		return userRepository.findByEmailAndPassword(email, password);
 	}

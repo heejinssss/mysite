@@ -37,7 +37,7 @@ public class UserController {
 	public String login() {
 		return "user/login";
 	}
-	
+
 	@Auth
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String update(@AuthUser UserVo authUser, Model model) {
@@ -46,7 +46,7 @@ public class UserController {
 
 		return "user/update";
 	}
-	
+
 	@Auth
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(@AuthUser UserVo authUser, UserVo vo) {

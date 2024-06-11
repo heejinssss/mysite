@@ -12,7 +12,6 @@ import com.poscodx.mysite.vo.GuestbookVo;
 
 @Service
 public class GuestbookService {
-
 	@Autowired
 	private GuestbookRepository guestbookRepository;
 
