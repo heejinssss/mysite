@@ -7,7 +7,7 @@
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="${pageContext.request.contextPath }/assets/css/main.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
@@ -15,10 +15,13 @@
 		<div id="wrapper">
 			<div id="content">
 				<div id="site-introduction">
-					<img id="profile" src="${pageContext.request.contextPath }/assets/images/naruto.png" style='width: 250px'>
-					<h2>안녕하세요. 배희진의  mysite에 오신 것을 환영합니다.</h2>
+					<img id="profile" src="${pageContext.request.contextPath }${sitevo.profile }" style="width:420px">
+					<h2>
+						${sitevo.welcome }
+					</h2>
 					<p>
-						블로그 실습<br><br>
+						${fn:replace(sitevo.description, newline, "<br>") }
+						<br><br>
 						<a href="${pageContext.request.contextPath }/guestbook">방명록</a>에 글 남기기<br>
 					</p>
 				</div>
